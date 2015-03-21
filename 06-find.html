@@ -131,64 +131,6 @@ Today it is not working
 Software is like that.</code></pre>
 <p>We use the <code>-E</code> flag and put the pattern in quotes to prevent the shell from trying to interpret it. (If the pattern contained a '*', for example, the shell would try to expand it before running <code>grep</code>.) The '^' in the pattern anchors the match to the start of the line. The '.' matches a single character (just like '?' in the shell), while the 'o' matches an actual 'o'.</p>
 </div>
-<p>While <code>grep</code> finds lines in files, the <code>find</code> command finds files themselves. Again, it has a lot of options; to show how the simplest ones work, we'll use the directory tree shown below.</p>
-<div class="figure">
-<img src="fig/find-file-tree.svg" alt="File Tree for Find Example" /><p class="caption">File Tree for Find Example</p>
-</div>
-<p>Nelle's <code>writing</code> directory contains one file called <code>haiku.txt</code> and four subdirectories: <code>thesis</code> (which is sadly empty), <code>data</code> (which contains two files <code>one.txt</code> and <code>two.txt</code>), a <code>tools</code> directory that contains the programs <code>format</code> and <code>stats</code>, and an empty subdirectory called <code>old</code>.</p>
-<p>For our first command, let's run <code>find . -type d</code>. As always, the <code>.</code> on its own means the current working directory, which is where we want our search to start; <code>-type d</code> means &quot;things that are directories&quot;. Sure enough, <code>find</code>'s output is the names of the five directories in our little tree (including <code>.</code>):</p>
-<pre class="input"><code>$ find . -type d</code></pre>
-<pre class="output"><code>./
-./data
-./thesis
-./tools
-./tools/old</code></pre>
-<p>If we change <code>-type d</code> to <code>-type f</code>, we get a listing of all the files instead:</p>
-<pre class="input"><code>$ find . -type f</code></pre>
-<pre class="output"><code>./haiku.txt
-./tools/stats
-./tools/old/oldtool
-./tools/format
-./thesis/empty-draft.md
-./data/one.txt
-./data/two.txt</code></pre>
-<p><code>find</code> automatically goes into subdirectories, their subdirectories, and so on to find everything that matches the pattern we've given it. If we don't want it to, we can use <code>-maxdepth</code> to restrict the depth of search:</p>
-<pre class="input"><code>$ find . -maxdepth 1 -type f</code></pre>
-<pre class="output"><code>./haiku.txt</code></pre>
-<p>The opposite of <code>-maxdepth</code> is <code>-mindepth</code>, which tells <code>find</code> to only report things that are at or below a certain depth. <code>-mindepth 2</code> therefore finds all the files that are two or more levels below us:</p>
-<pre class="input"><code>$ find . -mindepth 2 -type f</code></pre>
-<pre class="output"><code>./data/one.txt
-./data/two.txt
-./tools/format
-./tools/stats</code></pre>
-<p>Now let's try matching by name:</p>
-<pre class="input"><code>$ find . -name *.txt</code></pre>
-<pre class="output"><code>./haiku.txt</code></pre>
-<p>We expected it to find all the text files, but it only prints out <code>./haiku.txt</code>. The problem is that the shell expands wildcard characters like <code>*</code> <em>before</em> commands run. Since <code>*.txt</code> in the current directory expands to <code>haiku.txt</code>, the command we actually ran was:</p>
-<pre class="input"><code>$ find . -name haiku.txt</code></pre>
-<p><code>find</code> did what we asked; we just asked for the wrong thing.</p>
-<p>To get what we want, let's do what we did with <code>grep</code>: put <code>*.txt</code> in single quotes to prevent the shell from expanding the <code>*</code> wildcard. This way, <code>find</code> actually gets the pattern <code>*.txt</code>, not the expanded filename <code>haiku.txt</code>:</p>
-<pre class="input"><code>$ find . -name &#39;*.txt&#39;</code></pre>
-<pre class="output"><code>./data/one.txt
-./data/two.txt
-./haiku.txt</code></pre>
-<div id="listing-vs.-finding" class="callout">
-<h2>Listing vs. Finding</h2>
-<p><code>ls</code> and <code>find</code> can be made to do similar things given the right options, but under normal circumstances, <code>ls</code> lists everything it can, while <code>find</code> searches for things with certain properties and shows them.</p>
-</div>
-<p>As we said earlier, the command line's power lies in combining tools. We've seen how to do that with pipes; let's look at another technique. As we just saw, <code>find . -name '*.txt'</code> gives us a list of all text files in or below the current directory. How can we combine that with <code>wc -l</code> to count the lines in all those files?</p>
-<p>The simplest way is to put the <code>find</code> command inside <code>$()</code>:</p>
-<pre class="input"><code>$ wc -l $(find . -name &#39;*.txt&#39;)</code></pre>
-<pre class="output"><code>11 ./haiku.txt
-300 ./data/two.txt
-70 ./data/one.txt
-381 total</code></pre>
-<p>When the shell executes this command, the first thing it does is run whatever is inside the <code>$()</code>. It then replaces the <code>$()</code> expression with that command's output. Since the output of <code>find</code> is the three filenames <code>./data/one.txt</code>, <code>./data/two.txt</code>, and <code>./haiku.txt</code>, the shell constructs the command:</p>
-<pre class="input"><code>$ wc -l ./data/one.txt ./data/two.txt ./haiku.txt</code></pre>
-<p>which is what we wanted. This expansion is exactly what the shell does when it expands wildcards like <code>*</code> and <code>?</code>, but lets us use any command we want as our own &quot;wildcard&quot;.</p>
-<p>It's very common to use <code>find</code> and <code>grep</code> together. The first finds files that match a pattern; the second looks for lines inside those files that match another pattern. Here, for example, we can find PDB files that contain iron atoms by looking for the string &quot;FE&quot; in all the <code>.pdb</code> files above the current directory:</p>
-<pre class="input"><code>$ grep FE $(find .. -name &#39;*.pdb&#39;)</code></pre>
-<pre class="output"><code>../data/pdb/heme.pdb:ATOM     25 FE           1      -0.924   0.535  -0.518</code></pre>
 <div id="binary-files" class="callout">
 <h2>Binary Files</h2>
 <p>We have focused exclusively on finding things in text files. What if your data is stored as images, in databases, or in some other format? One option would be to extend tools like <code>grep</code> to handle those formats. This hasn't happened, and probably won't, because there are too many formats to support.</p>
@@ -221,21 +163,6 @@ Software is like that.</code></pre>
 <li><code>grep -i of haiku.txt</code></li>
 </ol>
 </div>
-<div id="find-pipeline-reading-comprehension" class="challenge">
-<h2><code>find</code> pipeline reading comprehension</h2>
-<p>Write a short explanatory comment for the following shell script:</p>
-<pre class="input"><code>find . -name &#39;*.dat&#39; | wc -l | sort -n</code></pre>
-</div>
-<blockquote>
-<h2>Matching <code>ose.dat</code> but not <code class="challenge">temp</code></h2>
-<p>The <code>-v</code> flag to <code>grep</code> inverts pattern matching, so that only lines which do <em>not</em> match the pattern are printed. Given that, which of the following commands will find all files in <code>/data</code> whose names end in <code>ose.dat</code> (e.g., <code>sucrose.dat</code> or <code>maltose.dat</code>), but do <em>not</em> contain the word <code>temp</code>?</p>
-<ol style="list-style-type: decimal">
-<li><p><code>find /data -name '*.dat' | grep ose | grep -v temp</code></p></li>
-<li><p><code>find /data -name ose.dat | grep -v temp</code></p></li>
-<li><p><code>grep -v temp $(find /data -name '*ose.dat')</code></p></li>
-<li><p>None of the above.</p></li>
-</ol>
-</blockquote>
 <div id="little-women" class="challenge">
 <h2>Little Women</h2>
 <p>You and your friend, having just finished reading <em>Little Women</em> by Louisa May Alcott, are in an argument. Of the four sisters in the book, Jo, Meg, Beth, and Amy, your friend thinks that Jo was the most mentioned. You, however, are certain it was Amy. Luckily, you have a file <code>LittleWomen.txt</code> containing the full text of the novel. Using a<code>for</code> loop, how would you tabulate the number of times each of the four sisters is mentioned? Hint: one solution might employ the commands <code>grep</code> and <code>wc</code> and a <code>|</code>, while another might utilize <code>grep</code> options.</p>
