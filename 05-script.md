@@ -23,7 +23,7 @@ Let's start by going back to `molecules/` and putting the following line in the 
 
 ~~~ {.input}
 $ cd molecules
-$ cat middle.sh
+$ vi middle.sh
 ~~~
 ~~~
 head -15 octane.pdb | tail -5
@@ -62,7 +62,8 @@ our script's output is exactly what we would get if we ran that pipeline directl
 > anything to tools like `head`: they expect input files to contain
 > nothing but the letters, digits, and punctuation on a standard computer
 > keyboard. When editing programs, therefore, you must either use a plain
-> text editor, or be careful to save files as plain text.
+> text editor, or be careful to save files as plain text (in some cases 
+> that might not be enough). 
 
 What if we want to select lines from an arbitrary file?
 We could edit `middle.sh` each time to change the filename,
@@ -71,7 +72,7 @@ Instead,
 let's edit `middle.sh` and replace `octane.pdb` with a special variable called `$1`:
 
 ~~~ {.input}
-$ cat middle.sh
+$ vi middle.sh
 ~~~
 ~~~ {.output}
 head -20 "$1" | tail -5
@@ -126,7 +127,7 @@ though.
 Let's fix that by using the special variables `$2` and `$3`:
 
 ~~~ {.input}
-$ cat middle.sh
+$ vi middle.sh
 ~~~
 ~~~ {.output}
 head "$2" "$1" | tail "$3"
@@ -147,7 +148,7 @@ but it may take the next person who reads `middle.sh` a moment to figure out wha
 We can improve our script by adding some **comments** at the top:
 
 ~~~ {.input}
-$ cat middle.sh
+$ vi middle.sh
 ~~~
 ~~~ {.output}
 # Select lines from the middle of a file.
@@ -273,7 +274,7 @@ we have a completely accurate record of how we created that figure.
 >
 > Nelle could also use `colrm` (short for "column removal") to remove the
 > serial numbers on her previous commands.
-> Its parameters are the range of characters to strip from its input:
+> Its parameters are the range of characters to strip from each input line:
 >
 > ~~~
 > $ history | tail -5
@@ -304,8 +305,7 @@ and save it as a shell script.
 An off-hand comment from her supervisor has made Nelle realize that
 she should have provided a couple of extra parameters to `goostats` when she processed her files.
 This might have been a disaster if she had done all the analysis by hand,
-but thanks to for loops,
-it will only take a couple of hours to re-do.
+but thanks to "for" loops, it will only take a couple of hours to re-do.
 
 But experience has taught her that if something needs to be done twice,
 it will probably need to be done a third or fourth time as well.
