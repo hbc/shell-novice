@@ -81,51 +81,6 @@ $ ls -F thesis
 > draft.txt
 > ~~~
 
-Let's change our working directory to `thesis` using `cd`,
-then run a text editor called Nano to create a file called `draft.txt`:
-
-~~~ {.input}
-$ cd thesis
-$ nano draft.txt
-~~~
-
-> ## Which Editor? {.callout}
-> 
-> When we say, "`nano` is a text editor," we really do mean "text": it can
-> only work with plain character data, not tables, images, or any other
-> human-friendly media. We use it in examples because almost anyone can
-> drive it anywhere without training, but please use something more
-> powerful for real work. On Unix systems (such as Linux and Mac OS X),
-> many programmers use [Emacs](http://www.gnu.org/software/emacs/) or
-> [Vim](http://www.vim.org/) (both of which are completely unintuitive,
-> even by Unix standards), or a graphical editor such as
-> [Gedit](http://projects.gnome.org/gedit/). On Windows, you may wish to
-> use [Notepad++](http://notepad-plus-plus.org/).
-> 
-> No matter what editor you use, you will need to know where it searches
-> for and saves files. If you start it from the shell, it will (probably)
-> use your current working directory as its default location. If you use
-> your computer's start menu, it may want to save files in your desktop or
-> documents directory instead. You can change this by navigating to
-> another directory the first time you "Save As..."
-
-Let's type in a few lines of text,
-then use Control-O to write our data to disk:
-
-![Nano in action](nano-screenshot.png)
-
-Once our file is saved,
-we can use Control-X to quit the editor and return to the shell.
-(Unix documentation often uses the shorthand `^A` to mean "control-A".)
-`nano` doesn't leave any output on the screen after it exits,
-but `ls` now shows that we have created a file called `draft.txt`:
-
-~~~ {.input}
-$ ls
-~~~
-~~~ {.output}
-draft.txt
-~~~
 
 Let's tidy up by running `rm draft.txt`:
 
@@ -162,7 +117,7 @@ $ pwd
 /users/nelle/thesis
 ~~~
 ~~~ {.input}
-$ nano draft.txt
+$ touch draft.txt
 $ ls
 ~~~
 ~~~ {.output}
@@ -225,7 +180,7 @@ $ rmdir thesis
 > without care.
 
 Let's create that directory and file one more time.
-(Note that this time we're running `nano` with the path `thesis/draft.txt`,
+(Note that this time we're running `touch` with the path `thesis/draft.txt`,
 rather than going into the `thesis` directory and running `nano` on `draft.txt` there.)
 
 ~~~ {.input}
@@ -238,7 +193,7 @@ $ pwd
 $ mkdir thesis
 ~~~
 ~~~ {.input}
-$ nano thesis/draft.txt
+$ touch thesis/draft.txt
 $ ls thesis
 ~~~
 ~~~ {.output}

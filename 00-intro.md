@@ -9,7 +9,6 @@ minutes: 5
 > *   Explain how the shell relates to the keyboard, the screen, the operating system, and users' programs.
 > *   Explain when and why command-line interfaces should be used instead of graphical interfaces.
 
-## Test title
 At a high level, computers do four things:
 
 -   run programs
