@@ -29,10 +29,10 @@
         <div class="span10 offset1">
           <h1 class="title">Introduction to Vim</h1>
           
-<p>Vim is a very powerful text editor, and it offers extensive text editing options. However, in this introduction we are only going to focus on exploring some of the basic functions of it. There is a lot of functionality that we are not going to cover during this session, but encourage you to go further as you become more comfortable using it. To help you remember some of the keyboard shortcuts that are introduced below, we have compiled a <a href="./VI_CommandReference.pdf">cheatsheet</a>.</p>
+<p>Vim is a very powerful text editor, and it offers extensive text editing options. However, in this introduction we are going to focus on exploring some basic functions. There is a lot of functionality that we are not going to cover during this session, but encourage you to go further as you become more comfortable using it. To help you remember some of the keyboard shortcuts that are introduced below and to allow you to explore additional functionality on your own, we have compiled a <a href="./VI_CommandReference.pdf">cheatsheet</a>.</p>
 <div id="which-editor" class="callout">
 <h3>Which Editor?</h3>
-<p>When we say, &quot;<code>vim</code> is a text editor,&quot; we really do mean &quot;text&quot;: it can only work with plain character data, not tables, images, or any other media. While there are more intuitive editors that are available for use (i.e. <a href="http://www.nano-editor.org/">nano</a> which is more commonly used with Software Carpentry), most computational scientists tend to favour editors that have greater functionality. Some popular editors include <a href="http://www.gnu.org/software/emacs/">Emacs</a>, <a href="http://www.vim.org/">Vim</a>, or a graphical editor such as <a href="http://projects.gnome.org/gedit/">Gedit</a>. These are editors which are generally available for use on high performance computing clusters.</p>
+<p>When we say, &quot;<code>vim</code> is a text editor,&quot; we really do mean &quot;text&quot;: it can only work with plain character data, not tables, images, or any other media. While there are simpler editors available for use (i.e. <a href="http://www.nano-editor.org/">nano</a> which is more commonly used with Software Carpentry), most computational scientists tend to favor editors that have greater functionality. Some popular editors include <a href="http://www.gnu.org/software/emacs/">Emacs</a>, <a href="http://www.vim.org/">Vim</a>, or a graphical editor such as <a href="http://projects.gnome.org/gedit/">Gedit</a>. These are editors which are generally available for use on high performance computing clusters.</p>
 </div>
 <p>We previously covered how to create a file in Unix using the <code>touch</code> command, but you can also create a document by calling a text editor and providing the name of the document you wish to create. To create a document in vim entitled <code>draft.txt</code>, let's type in the terminal:</p>
 <pre class="input"><code> vi draft.txt</code></pre>
@@ -68,7 +68,7 @@
 <div class="figure">
 <img src="https://copy.com/Ehv0xQNIn2tCnbsm" alt="image" /><p class="caption">image</p>
 </div>
-<p>To edit your <code>draft.txt</code> document, open up the file again by calling vim and entering the file name: <code>vi draft.txt</code>. Change to insert mode and type a few more lines (you can move around the lines using the arrows on the keyboard). This time we decide not to <strong>quit without saving</strong> by typing <code>:q!</code></p>
+<p>To edit your <code>draft.txt</code> document, open up the file again by calling vim and entering the file name: <code>vi draft.txt</code>. Change to insert mode and type a few more lines (you can move around the lines using the arrows on the keyboard). This time we decide to <strong>quit without saving</strong> by typing <code>:q!</code></p>
 <div class="figure">
 <img src="https://copy.com/UTCsBsMdGeEuEvVR" alt="screenshot-quit" /><p class="caption">screenshot-quit</p>
 </div>
@@ -77,11 +77,11 @@
 <div class="figure">
 <img src="https://copy.com/lBAriOH4Cm34cp1M" alt="image" /><p class="caption">image</p>
 </div>
-<p>To make it easier to refer to distinct lines, we can add line numbers by typing <code>:set number</code>. Later, if you choose to remove the line numbers you can type <code>:set nonumber</code>.</p>
+<p>To make it easier to refer to distinct lines, we can add line numbers by typing <code>:set number</code>. <strong>Save the document.</strong> Later, if you choose to remove the line numbers you can type <code>:set nonumber</code>.</p>
 <div class="figure">
 <img src="https://copy.com/8EwFsrNOpLhIeFFy" alt="image" /><p class="caption">image</p>
 </div>
-<p>While we cannot point and click to navigate the document, we can use the arrow keys to move around. Navigating with arrow keys can be very slow, and so Vim has shortcuts (which are completely unituitive but very useful as you get used to them over time). Check to see what mode you are currently in. While in command mode, try moving around the screen and familarizing yourself with some of these shortcuts:</p>
+<p>While we cannot point and click to navigate the document, we can use the arrow keys to move around. Navigating with arrow keys can be very slow, so Vim has shortcuts (which are completely unituitive but very useful as you get used to them over time). Check to see what mode you are currently in. While in command mode, try moving around the screen and familarizing yourself with some of these shortcuts:</p>
 <pre><code>`gg`: move to top of file  
 `G`: move to bottom of file  
 `0`: move to beginning of line  
@@ -100,11 +100,11 @@
 <ol style="list-style-type: decimal">
 <li>Open spider.txt, and delete the word &quot;water&quot; from line #2.</li>
 <li>Quit without saving.</li>
-<li>Open <code>spider.txt</code> again, and delete the line &quot;Out came the sun and dried up all the rain, and the itsy bitsy spider went up the spout again.&quot;</li>
+<li>Open <code>spider.txt</code> again, and delete: &quot;Out came the sun and dried up all the rain, and the itsy bitsy spider went up the spout again.&quot;</li>
 <li>Save the file.</li>
 <li>Undo your previous deletion.</li>
 <li>Redo your previous deletion.</li>
-<li>Delete the first and last words from all lines.</li>
+<li>Delete the first and last words from each of the lines.</li>
 <li>Save the file and see whether your results match your neighbors.</li>
 </ol>
 </div>
